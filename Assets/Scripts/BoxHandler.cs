@@ -1,0 +1,64 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BoxHandler : MonoBehaviour {
+
+	Rigidbody2D rb2d;
+
+	public GameObject circlePlaceholder;
+	public GameObject player;
+	public float radius;
+	public bool isPlayerAbove;
+	public bool isUpsideDown;
+
+	void Start () {
+		rb2d = GetComponent<Rigidbody2D>();
+	}
+	
+	void Update () {
+		CheckIfPlayerAbove();
+
+		Vector2 gravity = Physics2D.gravity;
+		if (gravity.y > 0 && !isUpsideDown) {
+			Flip();
+			isUpsideDown = true;
+		}
+
+		if (gravity.y < 0 && isUpsideDown) {
+			Flip();
+			isUpsideDown = false;
+		}
+	}
+
+	void CheckIfPlayerAbove() {
+		isPlayerAbove = Physics2D.OverlapCircle(circlePlaceholder.transform.position, radius, 1 << LayerMask.NameToLayer("Player"));
+		
+		if (!isPlayerAbove) {
+			Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
+		}
+
+		else {
+			Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), false);
+		}
+
+		/* if (player.GetComponent<Player>().isUpsideDown) {
+			Flip();
+		} */
+	}
+
+	void Flip() {
+		transform.localScale = new Vector3(transform.localScale.x, -transform.localScale.y, transform.localScale.z);
+	}
+
+	private void OnTriggerEnter2D(Collider2D other) {
+		/* if (other.tag == "Switch") {
+			Flip();
+		} */
+	}
+
+	void OnDrawGizmos() {
+		Gizmos.DrawWireSphere(circlePlaceholder.transform.position, radius);
+		
+	}
+}
