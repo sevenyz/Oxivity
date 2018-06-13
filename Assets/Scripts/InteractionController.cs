@@ -38,7 +38,7 @@ public class InteractionController : MonoBehaviour {
 	}
 
 	void PlaceBox() {
-		if (Input.GetKeyUp(KeyCode.E)) {
+		if (Input.GetKeyUp(KeyCode.E) && isGrabbing) {
 			Destroy(joint);
 			isGrabbing = false;
 

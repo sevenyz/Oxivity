@@ -12,6 +12,7 @@ TagManager:
   - Coin
   - Box
   - Switch
+  - GroundCheck
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - 
   - Ground
   - Player
-  - BelowBox
+  - GroundCheck
   - 
   - 
   - 

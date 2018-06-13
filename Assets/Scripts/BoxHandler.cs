@@ -32,14 +32,18 @@ public class BoxHandler : MonoBehaviour {
 	}
 
 	void CheckIfPlayerAbove() {
-		isPlayerAbove = Physics2D.OverlapCircle(circlePlaceholder.transform.position, radius, 1 << LayerMask.NameToLayer("Player"));
+		isPlayerAbove = Physics2D.OverlapCircle(circlePlaceholder.transform.position, radius, 1 << LayerMask.NameToLayer("GroundCheck"));
 		
 		if (!isPlayerAbove) {
 			Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
+			//player.GetComponent<Rigidbody2D>().gravityScale = 2;
+			rb2d.bodyType = RigidbodyType2D.Dynamic;
 		}
 
 		else {
 			Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), false);
+			//player.GetComponent<Rigidbody2D>().gravityScale = 0;
+			rb2d.bodyType = RigidbodyType2D.Static;
 		}
 
 		/* if (player.GetComponent<Player>().isUpsideDown) {

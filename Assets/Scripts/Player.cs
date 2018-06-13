@@ -60,6 +60,9 @@ public class Player : MonoBehaviour {
 
 	void FixedUpdate () {
 		Move (Input.GetAxisRaw("Horizontal"));
+		/* if (rb2d.gravityScale == 0) {
+			rb2d.gravityScale = 2;
+		} */
 	}
 
 	void Move (float horizontalInput) {
@@ -87,6 +90,8 @@ public class Player : MonoBehaviour {
 	// Direction can be applyied upwards or downwards
 	void Jump (Vector2 direction) {
 		// Applying variables to the rigidbody's velocity
+		
+
 		rb2d.velocity = direction * jumpForce * Time.fixedDeltaTime;
 	}
 
@@ -160,13 +165,13 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	private void OnCollisionStay2D(Collision2D other) {
+	/* private void OnCollisionStay2D(Collision2D other) {
 		if (other.gameObject.tag == "Box") {
 			Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), other.collider);
 		}
-	}
-
-	/* private void OnDrawGizmos() {
-		Gizmos.DrawWireSphere(groundCheckPos.position, circleRadius);
 	} */
+
+	void OnDrawGizmos() {
+		Gizmos.DrawWireSphere(groundCheckPos.position, circleRadius);
+	}
 }
