@@ -14,35 +14,80 @@ public class InteractionController : MonoBehaviour {
 	public bool canInteract;
 	public bool hasKey;
 	public bool isGrabbing;
-	public bool test;
+
+	bool keyPressed;
+
+	Player player;
 
 	FixedJoint2D joint;
 
+	void Start() {
+		joint = GetComponent<FixedJoint2D>();	
+		player = GetComponent<Player>();
+	}
+
 	void Update() {
-		if (canInteract && Input.GetKey(KeyCode.E)) {
-			Grab();
-		} 
-		PlaceBox();
+		//Grab();
+		
+		//PlaceBox();
+
+		TestGrab();
+	}
+
+	void TestGrab() {
+		if (Input.GetKeyDown(KeyCode.E)) {
+			keyPressed =! keyPressed;
+			if (canInteract) {
+				// Grab
+				canInteract = false;
+				isGrabbing = true;
+
+				joint = gameObject.AddComponent<FixedJoint2D>();
+				joint.connectedBody = interactionObject.gameObject.GetComponent<Rigidbody2D>();
+
+				player.jumpForce = player.jumpForceWhileGrab;
+
+				interactionObject.GetComponent<BoxCollider2D>().isTrigger = true;
+			}
+
+			if (isGrabbing && !keyPressed) {
+				// Release
+				isGrabbing = false;
+				Destroy(joint);
+
+				player.jumpForce = player.maxJumpForce;
+				interactionObject.GetComponent<BoxCollider2D>().isTrigger = false;
+			}
+		}
 	}
 
 	void Grab() {
-		isGrabbing = true;
-		joint = gameObject.AddComponent<FixedJoint2D>();
-		joint.connectedBody = interactionObject.gameObject.GetComponent<Rigidbody2D>();
+		if (canInteract && Input.GetKeyDown(KeyCode.E)) {
+			canInteract = false;
+			//joint.enabled = true;
+			isGrabbing = false;
+			joint = gameObject.AddComponent<FixedJoint2D>();
+			//joint.autoConfigureConnectedAnchor = false;
+			joint.connectedBody = interactionObject.gameObject.GetComponent<Rigidbody2D>();
+			//joint.anchor = new Vector2(0.18f, 0.13f);
+			//joint.connectedAnchor = new Vector2(-1, 0);
 
-		//interactionObject.transform.localPosition += new Vector3(0, .2f, 0);
-		interactionObject.transform.SetParent(boxPlaceHolder);
-		if (isGrabbing) {
-			interactionObject.transform.localPosition = boxPlaceHolder.transform.localPosition;
+
+			//interactionObject.transform.localPosition += new Vector3(0, .2f, 0);
+			//interactionObject.transform.SetParent(boxPlaceHolder);
+			if (isGrabbing) {
+				//interactionObject.transform.localPosition = boxPlaceHolder.transform.localPosition;
+			}
 		}
 	}
 
 	void PlaceBox() {
-		if (Input.GetKeyUp(KeyCode.E) && isGrabbing) {
-			Destroy(joint);
+		if (isGrabbing && Input.GetKeyDown(KeyCode.E)) {
+			//joint.enabled = false;
 			isGrabbing = false;
-
-			interactionObject.transform.SetParent(null);
+			canInteract = true;
+			Destroy(joint);
+			//interactionObject.transform.SetParent(null);
 		}
 	}
 
@@ -52,16 +97,12 @@ public class InteractionController : MonoBehaviour {
 			other.gameObject.SetActive(false);
 		}
 
-		if (other.tag == "Box") {
-			canInteract = true;
-			interactionObject = other.gameObject;
-		}
+		
 	}	
 
 	private void OnTriggerExit2D(Collider2D other) {
 		if (other.tag == "Box") {
 			canInteract = false;
-			
 		}
 	}
 
@@ -70,6 +111,12 @@ public class InteractionController : MonoBehaviour {
 			if (Input.GetKeyDown(KeyCode.E)) {
 				gameController.ShowLevelCompletedText();
 			}
+		}
+
+		if (other.tag == "Box" && !isGrabbing) {
+			canInteract = true;
+			keyPressed = false;
+			interactionObject = other.gameObject;
 		}
 	}
 

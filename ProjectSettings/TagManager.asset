@@ -13,6 +13,7 @@ TagManager:
   - Box
   - Switch
   - GroundCheck
+  - O2Tank
   layers:
   - Default
   - TransparentFX
@@ -25,8 +26,8 @@ TagManager:
   - Ground
   - Player
   - GroundCheck
-  - 
-  - 
+  - GravitySwitch
+  - SwitchTrigger
   - 
   - 
   - 

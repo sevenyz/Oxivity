@@ -5,13 +5,17 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
+	Animator animator;
 	Rigidbody2D rb2d;
 	public bool isUpsideDown;
 	bool isFacingRight = true;
 	bool isGrounded;
-	float oxygenLevel;
+	public float oxygenLevel;
+	public float o2TankValue;
+	public float o2MaxTankValue;
 	float maxSpeed;
-	float maxJumpForce;
+	[HideInInspector] public float maxJumpForce;
+	public float jumpForceWhileGrab;
 
 	public GameController gameController;
 	public GameObject switchTrigger;
@@ -27,15 +31,20 @@ public class Player : MonoBehaviour {
 	public float oxygenMaxLevel;
 	public float circleRadius;
 
+	public Text restoredO2;
+
 	void Awake () {
 		// Applying references
 		rb2d = GetComponent<Rigidbody2D>();
+		animator = GetComponent<Animator>();
 	}
 
 	void Start() {
 		oxygenLevel = oxygenMaxLevel;
 		oxygenSlider.maxValue = oxygenLevel;
-		oxygenSlider.value = oxygenLevel;	
+		oxygenSlider.value = oxygenLevel;
+
+		o2MaxTankValue = o2TankValue;	
 
 		maxSpeed = speed;
 		maxJumpForce = jumpForce;
@@ -163,13 +172,26 @@ public class Player : MonoBehaviour {
 			Flip(false, true);
 			switchTrigger.SetActive(false);
 		}
-	}
 
-	/* private void OnCollisionStay2D(Collision2D other) {
-		if (other.gameObject.tag == "Box") {
-			Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), other.collider);
+		if (other.tag == "O2Tank") {
+
+			if (o2TankValue + oxygenLevel > oxygenMaxLevel) {
+				o2TankValue =  Mathf.Abs(oxygenLevel - oxygenMaxLevel);
+				oxygenMaxLevel += o2TankValue;
+			}
+
+			else {
+				oxygenMaxLevel += o2TankValue;
+			}
+
+			restoredO2.text = "+" +  o2MaxTankValue.ToString();
+
+			restoredO2.gameObject.SetActive(true);
+			
+			
+			Destroy(other.gameObject);
 		}
-	} */
+	}
 
 	void OnDrawGizmos() {
 		Gizmos.DrawWireSphere(groundCheckPos.position, circleRadius);

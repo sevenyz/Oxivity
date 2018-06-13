@@ -20,6 +20,8 @@ public class BoxHandler : MonoBehaviour {
 		CheckIfPlayerAbove();
 
 		Vector2 gravity = Physics2D.gravity;
+		
+
 		if (gravity.y > 0 && !isUpsideDown) {
 			Flip();
 			isUpsideDown = true;
@@ -37,18 +39,14 @@ public class BoxHandler : MonoBehaviour {
 		if (!isPlayerAbove) {
 			Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
 			//player.GetComponent<Rigidbody2D>().gravityScale = 2;
-			rb2d.bodyType = RigidbodyType2D.Dynamic;
+			//rb2d.bodyType = RigidbodyType2D.Dynamic;
 		}
 
 		else {
 			Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), false);
 			//player.GetComponent<Rigidbody2D>().gravityScale = 0;
-			rb2d.bodyType = RigidbodyType2D.Static;
+			//rb2d.bodyType = RigidbodyType2D.Static;
 		}
-
-		/* if (player.GetComponent<Player>().isUpsideDown) {
-			Flip();
-		} */
 	}
 
 	void Flip() {
@@ -56,9 +54,7 @@ public class BoxHandler : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
-		/* if (other.tag == "Switch") {
-			Flip();
-		} */
+		
 	}
 
 	void OnDrawGizmos() {
