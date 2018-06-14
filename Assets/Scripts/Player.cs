@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
 	float o2MaxTankValue;
 	
 	public GameController gameController;
-	public GameObject switchTrigger;
+	public List <GameObject> switchTrigger;
 	public Slider oxygenSlider;
 	public Transform groundCheckPos;
 	public Transform front;
@@ -25,6 +25,8 @@ public class Player : MonoBehaviour {
 	public Text restoredO2;
 
 	public AudioSource jumpSound;
+	public AudioSource o2TankPickUpSound;
+	public AudioSource gravitySwap;
 
 	public bool isGameOver;
 	public bool isUpsideDown;
@@ -69,6 +71,13 @@ public class Player : MonoBehaviour {
 				Jump (Vector2.down);
 			}
 		}
+
+		if (Input.GetAxisRaw("Horizontal") != 0) {
+			animator.SetBool("isMoving", true);
+		}
+		else {
+			animator.SetBool("isMoving", false);
+		}
 	}
 
 	void FixedUpdate () {
@@ -93,8 +102,8 @@ public class Player : MonoBehaviour {
 		// Checking if moving left and facing right
 		else if (horizontalInput < 0 && isFacingRight) {
 			// Flip the sprite on the x axis
-			Flip (true, false);
-		}
+			Flip (true, false);	
+		} 
 	}
 
 	// Jump can be applyied upwards or downwards setting the desired direction
@@ -120,6 +129,7 @@ public class Player : MonoBehaviour {
 
 	// Applies to every gameobject with a dynamic rigidbody
 	void TotalGravitySwitch() {
+		gravitySwap.Play();
 		// Reversing the current gravity scale on the y axis
 		Physics2D.gravity = new Vector2(0, -Physics2D.gravity.y);
 
@@ -155,7 +165,7 @@ public class Player : MonoBehaviour {
 
 		// Gameover effects
 		isGameOver = true;
-		Destroy(GetComponent<BoxCollider2D>());
+		// Destroy(GetComponent<BoxCollider2D>());
 		Destroy(this);
 	}
 
@@ -166,15 +176,23 @@ public class Player : MonoBehaviour {
 	private void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "GravitySwitch") {
 			TotalGravitySwitch();
-			switchTrigger.SetActive(true);
+
+			foreach (GameObject trig in switchTrigger) {
+				trig.SetActive(true);
+			}
 		}
 
 		if (other.tag == "Switch") {
 			Flip(false, true);
-			switchTrigger.SetActive(false);
+			
+			foreach (GameObject trig in switchTrigger) {
+				trig.SetActive(false);
+			}
 		}
 
 		if (other.tag == "O2Tank") {
+			o2TankPickUpSound.Play();
+
 			// Checking if the sum of our current o2 and the o2 tank is greater than our max o2 capacity
 			if (o2TankValue + oxygenLevel > oxygenMaxLevel) {
 				// Refilling only for our available o2 capacity

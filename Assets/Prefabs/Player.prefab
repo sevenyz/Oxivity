@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 4487559385767170}
   - component: {fileID: 61921483275446374}
   - component: {fileID: 114954778498586146}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Front
   m_TagString: BlockChecker
   m_Icon: {fileID: 0}
@@ -240,11 +240,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb5f6dde140b14535adb055d47831937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isUpsideDown: 0
-  o2TankValue: 20
   maxSpeed: 0
   maxJumpForce: 0
-  jumpForceWhileGrab: 600
   gameController: {fileID: 0}
   switchTrigger: {fileID: 0}
   oxygenSlider: {fileID: 0}
@@ -253,12 +250,16 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
+  restoredO2: {fileID: 0}
+  jumpSound: {fileID: 0}
   isGameOver: 0
+  isUpsideDown: 0
   speed: 200
   jumpForce: 450
+  jumpForceWhileGrab: 600
   oxygenMaxLevel: 100
+  o2TankValue: 20
   circleRadius: 0.1
-  restoredO2: {fileID: 0}
 --- !u!114 &114815807041953744
 MonoBehaviour:
   m_ObjectHideFlags: 1
