@@ -5,33 +5,33 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
+	[HideInInspector] public float maxSpeed;
+	[HideInInspector] public float maxJumpForce;
+
 	Animator animator;
 	Rigidbody2D rb2d;
-	public bool isUpsideDown;
+	
 	bool isFacingRight = true;
 	bool isGrounded;
-	public float oxygenLevel;
-	public float o2TankValue;
-	public float o2MaxTankValue;
-	float maxSpeed;
-	[HideInInspector] public float maxJumpForce;
-	public float jumpForceWhileGrab;
-
+	float oxygenLevel;
+	float o2MaxTankValue;
+	
 	public GameController gameController;
 	public GameObject switchTrigger;
-
 	public Slider oxygenSlider;
-
 	public Transform groundCheckPos;
+	public Transform front;
 	public LayerMask whatIsGround;
+	public Text restoredO2;
 
 	public bool isGameOver;
+	public bool isUpsideDown;
 	public float speed;
 	public float jumpForce;
+	public float jumpForceWhileGrab;
 	public float oxygenMaxLevel;
+	public float o2TankValue;
 	public float circleRadius;
-
-	public Text restoredO2;
 
 	void Awake () {
 		// Applying references
@@ -40,6 +40,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void Start() {
+		// Assigning placeholder variables' value
 		oxygenLevel = oxygenMaxLevel;
 		oxygenSlider.maxValue = oxygenLevel;
 		oxygenSlider.value = oxygenLevel;
@@ -57,7 +58,7 @@ public class Player : MonoBehaviour {
 
 		// Checking for user input and if grounded
 		if (Input.GetButtonDown("Jump") && isGrounded) {
-			// Checking if not upside down
+			// Checking for current orientation
 			if (!isUpsideDown) {
 				Jump (Vector2.up);
 			}
@@ -69,9 +70,6 @@ public class Player : MonoBehaviour {
 
 	void FixedUpdate () {
 		Move (Input.GetAxisRaw("Horizontal"));
-		/* if (rb2d.gravityScale == 0) {
-			rb2d.gravityScale = 2;
-		} */
 	}
 
 	void Move (float horizontalInput) {
@@ -96,14 +94,13 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	// Direction can be applyied upwards or downwards
+	// Jump can be applyied upwards or downwards setting the desired direction
 	void Jump (Vector2 direction) {
 		// Applying variables to the rigidbody's velocity
-		
-
 		rb2d.velocity = direction * jumpForce * Time.fixedDeltaTime;
 	}
 
+	// Only applies to this rigidbody
 	void GravitySwitch () {
 		// Saving our current gravity scale
 		float gravity = rb2d.gravityScale;
@@ -118,11 +115,9 @@ public class Player : MonoBehaviour {
 		//Flip (true, true);
 	}
 
+	// Applies to every gameobject with a dynamic rigidbody
 	void TotalGravitySwitch() {
-		/* Vector2 gravity = Physics2D.gravity;
-
-		gravity.y *= -1; */
-
+		// Reversing the current gravity scale on the y axis
 		Physics2D.gravity = new Vector2(0, -Physics2D.gravity.y);
 
 		isUpsideDown = !isUpsideDown;
@@ -133,7 +128,7 @@ public class Player : MonoBehaviour {
 		// Saving our current scale
 		Vector3 scale = transform.localScale;
 		
-		// Setting the scale to its inverse
+		// Setting the axis scale to its inverse
 		if (xAxis) {
 			isFacingRight = !isFacingRight;
 			scale.x *= -1;
@@ -148,10 +143,14 @@ public class Player : MonoBehaviour {
 
 	IEnumerator DecreaseOxygen() {
 		while (oxygenLevel >= 0) {
+			// Decreasing our current o2 level by 1 every second and updating it's visual state
 			oxygenLevel = oxygenMaxLevel - Time.timeSinceLevelLoad;
 			oxygenSlider.value = oxygenLevel;
+
 			yield return null;
 		}
+
+		// Gameover effects
 		isGameOver = true;
 		Destroy(GetComponent<BoxCollider2D>());
 		Destroy(this);
@@ -163,7 +162,6 @@ public class Player : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "GravitySwitch") {
-			//GravitySwitch();
 			TotalGravitySwitch();
 			switchTrigger.SetActive(true);
 		}
@@ -174,26 +172,28 @@ public class Player : MonoBehaviour {
 		}
 
 		if (other.tag == "O2Tank") {
-
+			// Checking if the sum of our current o2 and the o2 tank is greater than our max o2 capacity
 			if (o2TankValue + oxygenLevel > oxygenMaxLevel) {
+				// Refilling only for our available o2 capacity
 				o2TankValue =  Mathf.Abs(oxygenLevel - oxygenMaxLevel);
 				oxygenMaxLevel += o2TankValue;
 			}
 
 			else {
+				// Refilling for the full o2 tank value
 				oxygenMaxLevel += o2TankValue;
 			}
-
+			// Refill text pop-up
 			restoredO2.text = "+" +  o2MaxTankValue.ToString();
 
 			restoredO2.gameObject.SetActive(true);
-			
-			
 			Destroy(other.gameObject);
 		}
 	}
 
+	// Only for debug purposes
 	void OnDrawGizmos() {
 		Gizmos.DrawWireSphere(groundCheckPos.position, circleRadius);
+		//Gizmos.DrawWireSphere(front.position, frontRadius);
 	}
 }

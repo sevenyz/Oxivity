@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour {
 
 	GameObject player;
-	//Vector3 speed;
 
 	public float smoothTime;
 
@@ -15,8 +14,6 @@ public class CameraFollow : MonoBehaviour {
 	}
 
 	void LateUpdate() {	
-		//Vector3 newPos = Vector3.SmoothDamp (transform.position, player.transform.position, ref speed, smoothTime);
-
 		// Lerping to the player's position by smoothTime
 		Vector3 newPos = Vector3.Lerp (transform.position, player.transform.position, smoothTime * Time.fixedDeltaTime);
 

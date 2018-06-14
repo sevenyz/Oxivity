@@ -11,13 +11,13 @@ public class GameController : MonoBehaviour {
 
 	public GameObject loadingScreen;
 	public GameObject gameOverText;
-	public GameObject restartText;
+	public GameObject restartOrQuitText;
 	public GameObject levelCompletedText;
 	public Slider loadingBar;
 
-	public int maxLevelUnlocked;
-	public bool levelCompleted;
-	public bool isOnLastLevel;
+	[HideInInspector] public int maxLevelUnlocked;
+	[HideInInspector] public bool levelCompleted;
+	[HideInInspector] public bool isOnLastLevel;
 
 	void Awake() {
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();	
@@ -31,27 +31,33 @@ public class GameController : MonoBehaviour {
 	void Update() {
 		GameOver();
 
+		/* Going to be removed */
+		// Checking if is last level
 		if (SceneManager.GetActiveScene().buildIndex >= 3) {
 			isOnLastLevel = true;
 		} 
 
+		// Loading next level
 		if (levelCompleted) {
 			if (Input.GetKeyDown(KeyCode.Return)) {
-				Debug.Log("enter");
 				StartCoroutine(Loading());
 			}
 		}
 	}
 
+	// Gameover actions
 	void GameOver() {
 		if (player.isGameOver) {
 			gameOverText.SetActive(true);
+
 			Invoke("ShowRestartText", 1);
 		}
 	}
 
 	void ShowRestartText() {
-		restartText.SetActive(true);
+		restartOrQuitText.SetActive(true);
+
+		// Reloading current level
 		if (Input.GetKeyDown(KeyCode.R)) {
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
@@ -64,15 +70,23 @@ public class GameController : MonoBehaviour {
 		UnlockLevel();
 	}
 
+	// Unlocks next level if current level is cleared
 	public void UnlockLevel() {
 		int levelToUnlock = SceneManager.GetActiveScene().buildIndex + 1;
 
+		// Saving
 		if (levelToUnlock > maxLevelUnlocked) {
 			maxLevelUnlocked = levelToUnlock;
 			PlayerPrefs.SetInt("UnlockedLevels", maxLevelUnlocked);
 		}
 	}
 
+	// Button
+	public void BackToMenu() {
+		SceneManager.LoadScene("MainMenu");
+	}
+
+	// Beta
 	public IEnumerator Loading() {
 		loadingScreen.SetActive(true);
 

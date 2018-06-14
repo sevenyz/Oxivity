@@ -4,22 +4,19 @@ using UnityEngine;
 
 public class InteractionController : MonoBehaviour {
 
-	public GameController gameController;
+	Player player;
+	Vector3 originalPos;
+	FixedJoint2D joint;
+
+	bool keyPressed;
 	
+	public GameController gameController;
 	public GameObject interactionObject;
 	public Transform boxPlaceHolder;
-
-	Vector3 originalPos;
 
 	public bool canInteract;
 	public bool hasKey;
 	public bool isGrabbing;
-
-	bool keyPressed;
-
-	Player player;
-
-	FixedJoint2D joint;
 
 	void Start() {
 		joint = GetComponent<FixedJoint2D>();	
@@ -27,41 +24,47 @@ public class InteractionController : MonoBehaviour {
 	}
 
 	void Update() {
-		//Grab();
-		
-		//PlaceBox();
-
 		TestGrab();
 	}
 
 	void TestGrab() {
-		if (Input.GetKeyDown(KeyCode.E)) {
+		if (Input.GetButtonDown("Grab")) {
+			// Controlling key state
 			keyPressed =! keyPressed;
+
+			// Grab mechanic
 			if (canInteract) {
-				// Grab
+				// Impeding the player possibility to grab multiple objects at once
 				canInteract = false;
+
 				isGrabbing = true;
 
+				// Creating a joint on the player and connecting our current interactable object to it
 				joint = gameObject.AddComponent<FixedJoint2D>();
 				joint.connectedBody = interactionObject.gameObject.GetComponent<Rigidbody2D>();
 
+				// Decreasing the player's jump force
 				player.jumpForce = player.jumpForceWhileGrab;
 
+				// Setting our object's collider to trigger to avoid unwanted collisions
 				interactionObject.GetComponent<BoxCollider2D>().isTrigger = true;
 			}
 
+			// Release mechanic
 			if (isGrabbing && !keyPressed) {
-				// Release
 				isGrabbing = false;
 				Destroy(joint);
 
+				// Resetting the normal player's jump force
 				player.jumpForce = player.maxJumpForce;
+
+				// Untriggering the object's collider to detect collisions again
 				interactionObject.GetComponent<BoxCollider2D>().isTrigger = false;
 			}
 		}
 	}
 
-	void Grab() {
+	/* void Grab() {
 		if (canInteract && Input.GetKeyDown(KeyCode.E)) {
 			canInteract = false;
 			//joint.enabled = true;
@@ -89,15 +92,13 @@ public class InteractionController : MonoBehaviour {
 			Destroy(joint);
 			//interactionObject.transform.SetParent(null);
 		}
-	}
+	} */
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "Key") {
 			CollectKey();
 			other.gameObject.SetActive(false);
 		}
-
-		
 	}	
 
 	private void OnTriggerExit2D(Collider2D other) {
@@ -108,11 +109,12 @@ public class InteractionController : MonoBehaviour {
 
 	private void OnTriggerStay2D(Collider2D other) {
 		if (other.tag == "Door" && hasKey && !gameController.isOnLastLevel) {
-			if (Input.GetKeyDown(KeyCode.E)) {
+			if (Input.GetButtonDown("Interact")) {
 				gameController.ShowLevelCompletedText();
 			}
 		}
 
+		// Checking if the player is facing a box
 		if (other.tag == "Box" && !isGrabbing) {
 			canInteract = true;
 			keyPressed = false;

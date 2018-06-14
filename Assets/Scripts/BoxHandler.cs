@@ -8,9 +8,10 @@ public class BoxHandler : MonoBehaviour {
 
 	public GameObject circlePlaceholder;
 	public GameObject player;
+
 	public float radius;
-	public bool isPlayerAbove;
-	public bool isUpsideDown;
+	[HideInInspector] public bool isPlayerAbove;
+	[HideInInspector] public bool isUpsideDown;
 
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D>();
@@ -44,21 +45,19 @@ public class BoxHandler : MonoBehaviour {
 
 		else {
 			Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), false);
+			player.GetComponent<InteractionController>().canInteract = false;
 			//player.GetComponent<Rigidbody2D>().gravityScale = 0;
 			//rb2d.bodyType = RigidbodyType2D.Static;
 		}
 	}
 
 	void Flip() {
+		// Inverting the local scale
 		transform.localScale = new Vector3(transform.localScale.x, -transform.localScale.y, transform.localScale.z);
 	}
 
-	private void OnTriggerEnter2D(Collider2D other) {
-		
-	}
-
+	// Only for debug purposes
 	void OnDrawGizmos() {
 		Gizmos.DrawWireSphere(circlePlaceholder.transform.position, radius);
-		
 	}
 }

@@ -6,9 +6,10 @@ public class PlatformController : MonoBehaviour {
 
 	AreaEffector2D effector;
 
+	public Vector2 direction;
+	
 	public float movementSpeed;
 	public float timeToChangeDirection;
-	public Vector2 direction;
 	
 	void Start () {
 		StartCoroutine(ChangeDirection());

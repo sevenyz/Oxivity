@@ -15,6 +15,7 @@ public class PauseController : MonoBehaviour {
 	}
 	
 	void Update () {
+		
 		if (Input.GetKeyDown(KeyCode.Escape) && pauseMain.activeSelf == true) {
 			PauseGame();
 		}
@@ -24,6 +25,7 @@ public class PauseController : MonoBehaviour {
 		}
 	}
 
+	// Inverting the current time scale and showing/hiding the pause panel
 	public void PauseGame() {
 		if (Time.timeScale != 0) {
 			pausePanel.SetActive(true);
@@ -34,6 +36,7 @@ public class PauseController : MonoBehaviour {
 		}
 	}
 
+	// Buttons
 	public void ShowHideOptions(GameObject panelToDisplay, GameObject panelToHide) {
 		panelToDisplay.SetActive(true);
 		panelToHide.SetActive(false);

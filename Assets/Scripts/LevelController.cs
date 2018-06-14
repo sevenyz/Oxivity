@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour {
 
+	public GameObject continueButton;
+
 	public int maxLevelUnlocked;
 
 	public List<Button> unlockedLevels;
@@ -14,6 +16,10 @@ public class LevelController : MonoBehaviour {
 		//DeleteKey("UnlockedLevels");
 		maxLevelUnlocked = PlayerPrefs.GetInt("UnlockedLevels", maxLevelUnlocked);
 		UnlockLevelButtons();
+
+		if (maxLevelUnlocked > 1) {
+			continueButton.SetActive(true);
+		}
 	}
 
 	void UnlockLevelButtons() {
@@ -44,5 +50,9 @@ public class LevelController : MonoBehaviour {
 	// Level Buttons
 	public void JumpToLevel(int level) {
 		SceneManager.LoadScene(level);
+	}
+
+	public void LoadLastLevel() {
+		SceneManager.LoadScene(maxLevelUnlocked);
 	}
 }

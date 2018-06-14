@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingScreen: {fileID: 0}
   gameOverText: {fileID: 0}
-  restartText: {fileID: 0}
+  restartOrQuitText: {fileID: 0}
   levelCompletedText: {fileID: 0}
   loadingBar: {fileID: 0}
   maxLevelUnlocked: 0
