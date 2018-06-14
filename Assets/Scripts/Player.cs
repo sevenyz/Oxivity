@@ -24,6 +24,8 @@ public class Player : MonoBehaviour {
 	public LayerMask whatIsGround;
 	public Text restoredO2;
 
+	public AudioSource jumpSound;
+
 	public bool isGameOver;
 	public bool isUpsideDown;
 	public float speed;
@@ -58,6 +60,7 @@ public class Player : MonoBehaviour {
 
 		// Checking for user input and if grounded
 		if (Input.GetButtonDown("Jump") && isGrounded) {
+			jumpSound.Play();
 			// Checking for current orientation
 			if (!isUpsideDown) {
 				Jump (Vector2.up);
