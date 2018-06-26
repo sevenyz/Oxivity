@@ -31,9 +31,8 @@ public class GameController : MonoBehaviour {
 	void Update() {
 		GameOver();
 
-		/* Going to be removed */
 		// Checking if is last level
-		if (SceneManager.GetActiveScene().buildIndex >= 3) {
+		if (SceneManager.GetActiveScene().buildIndex >= 4) {
 			isOnLastLevel = true;
 		} 
 
@@ -64,7 +63,6 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void ShowLevelCompletedText() {
-		Destroy(player.GetComponent<Player>());
 		levelCompleted = true;
 		levelCompletedText.SetActive(true);
 		UnlockLevel();

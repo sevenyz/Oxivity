@@ -16,11 +16,11 @@ public class PauseController : MonoBehaviour {
 	
 	void Update () {
 		
-		if (Input.GetKeyDown(KeyCode.Escape) && pauseMain.activeSelf == true) {
+		if (Input.GetKeyDown(KeyCode.Escape) && !pauseOptions.activeInHierarchy) {
 			PauseGame();
 		}
 
-		if (Input.GetKeyDown(KeyCode.Escape) && pauseOptions.activeSelf == true) {
+		if (Input.GetKeyDown(KeyCode.Escape) && !pauseMain.activeInHierarchy) {
 			ShowMainPause();
 		}
 	}

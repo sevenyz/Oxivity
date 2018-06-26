@@ -5,33 +5,36 @@ using UnityEngine;
 public class BoxHandler : MonoBehaviour {
 
 	Rigidbody2D rb2d;
+	InteractionController interactionController;
 
 	public GameObject circlePlaceholder;
 	public GameObject player;
 
+	public AudioSource land;
+
 	public float radius;
 	[HideInInspector] public bool isPlayerAbove;
-	[HideInInspector] public bool isUpsideDown;
+	public bool isUpsideDown;
+
 
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D>();
+		interactionController = player.GetComponent<InteractionController>();
 	}
 	
 	void Update () {
 		CheckIfPlayerAbove();
 
-		Vector2 gravity = Physics2D.gravity;
-		
-
-		if (gravity.y > 0 && !isUpsideDown) {
-			Flip();
-			isUpsideDown = true;
-		}
-
-		if (gravity.y < 0 && isUpsideDown) {
-			Flip();
+		if (rb2d.gravityScale > 0) {
 			isUpsideDown = false;
 		}
+		else {
+			isUpsideDown = true;
+		}
+	}
+
+	void SwapGravityScale() {
+		rb2d.gravityScale = -rb2d.gravityScale;
 	}
 
 	void CheckIfPlayerAbove() {
@@ -39,21 +42,29 @@ public class BoxHandler : MonoBehaviour {
 		
 		if (!isPlayerAbove) {
 			Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
-			//player.GetComponent<Rigidbody2D>().gravityScale = 2;
-			//rb2d.bodyType = RigidbodyType2D.Dynamic;
 		}
 
 		else {
 			Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), false);
 			player.GetComponent<InteractionController>().canInteract = false;
-			//player.GetComponent<Rigidbody2D>().gravityScale = 0;
-			//rb2d.bodyType = RigidbodyType2D.Static;
 		}
 	}
 
 	void Flip() {
 		// Inverting the local scale
 		transform.localScale = new Vector3(transform.localScale.x, -transform.localScale.y, transform.localScale.z);
+	}
+
+	private void OnCollisionEnter2D(Collision2D other) {
+		if (other.gameObject.tag != "Player") {
+			land.Play();
+		}
+	}
+
+	private void OnTriggerEnter2D(Collider2D other) {
+		if (other.tag == "Switch") {
+			Flip();
+		}
 	}
 
 	// Only for debug purposes

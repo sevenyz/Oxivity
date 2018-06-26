@@ -14,10 +14,6 @@ public class BlockChecker : MonoBehaviour {
 		if (other.tag == "Block") {
 			player.speed = 0;
 		}
-
-		if (other.tag == "GravitySwitch") {
-			Physics2D.IgnoreCollision(this.GetComponent<BoxCollider2D>(), other);
-		}
 	}
 
 	private void OnTriggerExit2D(Collider2D other) {

@@ -17,6 +17,10 @@ TagManager:
   - Block
   - BlockChecker
   - Death
+  - DoorToRoom2
+  - DoorToRoom1
+  - DoorToRoom
+  - FallTrap
   layers:
   - Default
   - TransparentFX
@@ -32,8 +36,8 @@ TagManager:
   - GravitySwitch
   - SwitchTrigger
   - Front
-  - 
-  - 
+  - Death
+  - Switch
   - 
   - 
   - 
@@ -53,4 +57,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1870235125
+    locked: 0
+  - name: Midground
+    uniqueID: 2108985833
+    locked: 0
+  - name: Foreground
+    uniqueID: 1727498173
     locked: 0

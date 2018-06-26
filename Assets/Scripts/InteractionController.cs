@@ -7,12 +7,17 @@ public class InteractionController : MonoBehaviour {
 	Player player;
 	Vector3 originalPos;
 	FixedJoint2D joint;
+	Rigidbody2D interObjRB;
 
 	bool keyPressed;
 	
 	public GameController gameController;
 	public GameObject interactionObject;
 	public Transform boxPlaceHolder;
+	public Animator doorAnim;
+
+	public AudioSource boxPickupSound;
+	public AudioSource keyPickupSound;
 
 	public bool canInteract;
 	public bool hasKey;
@@ -25,6 +30,10 @@ public class InteractionController : MonoBehaviour {
 
 	void Update() {
 		TestGrab();
+
+		if (isGrabbing) {
+			interactionObject.transform.position = Vector2.Lerp(interactionObject.transform.position, boxPlaceHolder.position, 20 * Time.deltaTime);
+		}
 	}
 
 	void TestGrab() {
@@ -38,6 +47,7 @@ public class InteractionController : MonoBehaviour {
 				canInteract = false;
 
 				isGrabbing = true;
+				boxPickupSound.Play();
 
 				// Creating a joint on the player and connecting our current interactable object to it
 				joint = gameObject.AddComponent<FixedJoint2D>();
@@ -64,40 +74,15 @@ public class InteractionController : MonoBehaviour {
 		}
 	}
 
-	/* void Grab() {
-		if (canInteract && Input.GetKeyDown(KeyCode.E)) {
-			canInteract = false;
-			//joint.enabled = true;
-			isGrabbing = false;
-			joint = gameObject.AddComponent<FixedJoint2D>();
-			//joint.autoConfigureConnectedAnchor = false;
-			joint.connectedBody = interactionObject.gameObject.GetComponent<Rigidbody2D>();
-			//joint.anchor = new Vector2(0.18f, 0.13f);
-			//joint.connectedAnchor = new Vector2(-1, 0);
-
-
-			//interactionObject.transform.localPosition += new Vector3(0, .2f, 0);
-			//interactionObject.transform.SetParent(boxPlaceHolder);
-			if (isGrabbing) {
-				//interactionObject.transform.localPosition = boxPlaceHolder.transform.localPosition;
-			}
-		}
-	}
-
-	void PlaceBox() {
-		if (isGrabbing && Input.GetKeyDown(KeyCode.E)) {
-			//joint.enabled = false;
-			isGrabbing = false;
-			canInteract = true;
-			Destroy(joint);
-			//interactionObject.transform.SetParent(null);
-		}
-	} */
-
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "Key") {
 			CollectKey();
 			other.gameObject.SetActive(false);
+		}
+
+		if (other.tag == "GravitySwitch" && isGrabbing) {
+			interObjRB = interactionObject.GetComponent<Rigidbody2D>();
+			interObjRB.gravityScale = -interObjRB.gravityScale;
 		}
 	}	
 
@@ -111,6 +96,7 @@ public class InteractionController : MonoBehaviour {
 		if (other.tag == "Door" && hasKey && !gameController.isOnLastLevel) {
 			if (Input.GetButtonDown("Interact")) {
 				gameController.ShowLevelCompletedText();
+				doorAnim.SetTrigger("DoorOpenStay");
 			}
 		}
 
@@ -124,5 +110,6 @@ public class InteractionController : MonoBehaviour {
 
 	void CollectKey() {
 		hasKey = true;
+		keyPickupSound.Play();
 	}
 }
