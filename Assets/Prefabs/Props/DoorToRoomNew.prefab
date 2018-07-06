@@ -37,8 +37,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1967661107774014}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: -7.6, y: 2.6, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 1}
+  m_LocalPosition: {x: -7.6, y: 2.9, z: 0}
+  m_LocalScale: {x: 6, y: 6, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -96,9 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e29486f732246de952f07868b943b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  isTransitioning: 0
   thisRoom: {fileID: 0}
   nextRoom: {fileID: 0}
+  player: {fileID: 0}
   playerPlaceholderForRepositioning: {fileID: 0}
   swapGravity: 1
   repositionPlayer: 0
