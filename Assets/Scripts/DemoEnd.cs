@@ -8,12 +8,6 @@ public class DemoEnd : MonoBehaviour {
 	public InteractionController interaction;
 	public GameObject demoEndPanel;
 
-	/* void Update () {
-		if (gameController.levelCompleted && gameController.isOnLastLevel) {
-			demoEndPanel.SetActive(true);
-		}
-	} */
-
 	public void QuitGame() {
 		Application.Quit();
 	}

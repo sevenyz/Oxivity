@@ -169,15 +169,6 @@ public class Player : MonoBehaviour {
 		FlipTriggerStatus(true);
 	}
 
-	/* // Applies to every gameobject with a dynamic rigidbody
-	void TotalGravitySwitch() {
-		gravitySwap.Play();
-		// Reversing the current gravity scale on the y axis
-		Physics2D.gravity = new Vector2(0, -Physics2D.gravity.y);
-
-		isUpsideDown = !isUpsideDown;
-	} */
-
 	// Taking in booleans to decide which axis to flip
 	public void Flip (bool xAxis, bool yAxis) {
 		// Saving our current scale

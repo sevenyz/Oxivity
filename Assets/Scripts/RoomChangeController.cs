@@ -15,7 +15,6 @@ public class RoomChangeController : MonoBehaviour {
 
 	public Transform playerPlaceholderForRepositioning;
 
-	public bool swapGravity;
 	public bool repositionPlayer;
 	public bool canInteractWithDoor;
 
@@ -29,8 +28,6 @@ public class RoomChangeController : MonoBehaviour {
 			fadeAnim.SetTrigger("Transition");
 
 			Invoke("RestorePlayerMovement", 2.5f);
-			
-			//canInteractWithDoor = false;
 
 			if (doorAnim != null) {
 				doorAnim.SetTrigger("DoorOpen");
@@ -56,20 +53,6 @@ public class RoomChangeController : MonoBehaviour {
 
 		thisRoom.SetActive(false);
 		nextRoom.SetActive(true);
-
-		if (swapGravity) {
-
-			player.transform.localScale = new Vector2(1, -player.transform.localScale.y);
-			
-			player.isUpsideDown =! player.isUpsideDown;
-		
-			playerRB = player.GetComponent<Rigidbody2D>();
-			playerRB.gravityScale = -playerRB.gravityScale;
-
-			if (!player.isFacingRight) {
-				player.isFacingRight = true;
-			}
-		} 
 
 		if (repositionPlayer) {
 			player.transform.position = playerPlaceholderForRepositioning.position;

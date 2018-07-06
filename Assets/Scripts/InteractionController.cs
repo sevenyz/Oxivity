@@ -37,7 +37,6 @@ public class InteractionController : MonoBehaviour {
 	}
 
 	void Grab() {
-		// Grab mechanic
 		if (canInteract) {
 			// Impeding the player possibility to grab multiple objects at once
 			canInteract = false;
@@ -51,14 +50,10 @@ public class InteractionController : MonoBehaviour {
 
 			// Decreasing the player's jump force
 			player.jumpForce = player.jumpForceWhileGrab;
-
-			// Setting our object's collider to trigger to avoid unwanted collisions
-			//interactionObject.GetComponent<BoxCollider2D>().isTrigger = true;
 		}	
 	}
 
 	void Release() {
-		// Release mechanic
 		if (isGrabbing && !keyPressed) {
 			isGrabbing = false;
 			Destroy(joint);
