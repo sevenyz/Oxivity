@@ -10,13 +10,12 @@ public class Player : MonoBehaviour {
 
 	Animator animator;
 	Rigidbody2D rb2d;
-	GameObject fallTrap;
 	
-	public bool isFacingRight = true;
-	bool isGrounded;
+	public bool isGrounded;
 	float oxygenLevel;
 	float o2MaxTankValue;
 	
+	public Animator o2Anim;
 	public GameController gameController;
 	public List <GameObject> switchTrigger;
 	public Slider oxygenSlider;
@@ -30,9 +29,13 @@ public class Player : MonoBehaviour {
 	public AudioSource gravitySwap;
 	public AudioSource step;
 	public AudioSource land;
+	public AudioSource hurtSound;
+	public AudioSource warningSlow;
+	public AudioSource warningFast;
 
 	public bool isGameOver;
 	public bool isUpsideDown;
+	public bool isFacingRight = true;
 	public float speed;
 	public float jumpForce;
 	public float jumpForceWhileGrab;
@@ -61,40 +64,49 @@ public class Player : MonoBehaviour {
 		
 		land.volume = 0;
 	}
-	
+
 	void Update () {
 		GroundCheck();
 
 		if (Time.timeScale != 0) {
 
-			// Checking for user input and if grounded
-			if (Input.GetButtonDown("Jump")) {
-				// Checking for current orientation
-				if (!isUpsideDown) {
-					Jump (Vector2.up);
-				}
-				else {
-					Jump (Vector2.down);
-				}
-			}
-
-			if (Input.GetAxisRaw("Horizontal") != 0) {
-				animator.SetBool("isMoving", true);
-				ControlStepSound();
-			}
-			else {
-				animator.SetBool("isMoving", false);
-			}
-
-			if (oxygenLevel <= 0) {
-				isGameOver = true;
-				animator.SetBool("isChoking", true);
-			}
+			JumpControl();
 		}
 	}
 
 	void FixedUpdate () {
 		Move (Input.GetAxisRaw("Horizontal"));
+	}
+
+	void LateUpdate() {
+
+		MovementAnimationControl();
+
+		ChokingAnimationControl();
+
+		CheckO2Percentage();
+	}
+
+	void ChokingAnimationControl() {
+		if (oxygenLevel <= 0) {
+			isGameOver = true;
+			animator.SetBool("isChoking", true);
+			Destroy(this);
+		}
+	}
+
+	void ShockAnimationControl() {
+		
+	}
+
+	void MovementAnimationControl() {
+		if (Input.GetAxisRaw("Horizontal") != 0) {
+			animator.SetBool("isMoving", true);
+			ControlStepSound();
+		}
+		else {
+			animator.SetBool("isMoving", false);
+		}
 	}
 
 	void Move (float horizontalInput) {
@@ -128,28 +140,43 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	void JumpControl() {
+		// Checking for user input and if grounded
+		if (Input.GetButtonDown("Jump")) {
+			// Checking for current orientation
+			if (!isUpsideDown) {
+				Jump (Vector2.up);
+			}
+			else {
+				Jump (Vector2.down);
+			}
+		}
+	}
+
 	// Only applies to this rigidbody
 	void GravitySwitch () {
-		// Saving our current gravity scale
-		float gravity = rb2d.gravityScale;
-
 		// Applying its reverse value
-		rb2d.gravityScale = -gravity;
+		rb2d.gravityScale = -rb2d.gravityScale;
 
 		// Switching the boolean
 		isUpsideDown = !isUpsideDown;
 
 		gravitySwap.Play();
+
+		speed = 0;
+		jumpForce = 0;
+
+		FlipTriggerStatus(true);
 	}
 
-	// Applies to every gameobject with a dynamic rigidbody
+	/* // Applies to every gameobject with a dynamic rigidbody
 	void TotalGravitySwitch() {
 		gravitySwap.Play();
 		// Reversing the current gravity scale on the y axis
 		Physics2D.gravity = new Vector2(0, -Physics2D.gravity.y);
 
 		isUpsideDown = !isUpsideDown;
-	}
+	} */
 
 	// Taking in booleans to decide which axis to flip
 	public void Flip (bool xAxis, bool yAxis) {
@@ -179,6 +206,45 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	void CheckO2Percentage() {
+		float percentageRemaining = oxygenLevel / oxygenMaxLevel * 100;
+
+		if (percentageRemaining >= 50f) {
+			o2Anim.SetBool("NoWarning", true);
+			o2Anim.SetBool("YellowWarning", false);
+			o2Anim.SetBool("RedWarning", false);
+
+			warningFast.Stop();
+			warningSlow.Stop();
+		}
+
+		if (percentageRemaining <= 40f) {
+			o2Anim.SetBool("NoWarning", false);
+			o2Anim.SetBool("YellowWarning", true);
+
+			if (!warningSlow.isPlaying) {
+				warningSlow.Play();
+			}
+		}
+
+		if (percentageRemaining <= 20f) {
+			o2Anim.SetBool("YellowWarning", false);
+			o2Anim.SetBool("RedWarning", true);
+			
+			warningSlow.Stop();
+
+			if (!warningFast.isPlaying) {
+				warningFast.Play();
+			}
+		}
+
+		if (percentageRemaining <= 0) {
+			o2Anim.SetBool("NoWarning", true);
+			
+			warningFast.Stop();
+		}
+	}
+
 	void GroundCheck() {
 		isGrounded = Physics2D.OverlapCircle(groundCheckPos.position, circleRadius, 1 << LayerMask.NameToLayer("Ground"));
 
@@ -189,42 +255,67 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	private void OnTriggerEnter2D(Collider2D other) {
-		if (other.tag == "GravitySwitch") {
-			GravitySwitch();
+	void RestoreOxygen() {
+		o2TankPickUpSound.Play();
 
-			foreach (GameObject trig in switchTrigger) {
-				if (trig != null) {
+		// Checking if the sum of our current o2 and the o2 tank is greater than our max o2 capacity
+		if (o2TankValue + oxygenLevel > oxygenMaxLevel) {
+			// Refilling only for our available o2 capacity
+			o2TankValue =  Mathf.Abs(oxygenLevel - oxygenMaxLevel);
+			oxygenMaxLevel += o2TankValue;
+		}
+
+		else {
+			// Refilling for the full o2 tank value
+			oxygenMaxLevel += o2TankValue;
+		}
+		// Refill text pop-up
+		restoredO2.text = "+" +  o2MaxTankValue.ToString();
+
+		restoredO2.gameObject.SetActive(true);
+	}
+
+	void FlipTriggerStatus (bool activate) {
+		foreach (GameObject trig in switchTrigger) {
+
+			if (trig != null) {
+				if (activate) {
 					trig.SetActive(true);
+				}
+				else {
+					trig.SetActive(false);
 				}
 			}
 		}
+	}
+
+	private void OnTriggerEnter2D(Collider2D other) {
+		if (other.tag == "GravitySwitch") {
+			GravitySwitch();
+		}
 
 		if (other.tag == "O2Tank") {
-			o2TankPickUpSound.Play();
-
-			// Checking if the sum of our current o2 and the o2 tank is greater than our max o2 capacity
-			if (o2TankValue + oxygenLevel > oxygenMaxLevel) {
-				// Refilling only for our available o2 capacity
-				o2TankValue =  Mathf.Abs(oxygenLevel - oxygenMaxLevel);
-				oxygenMaxLevel += o2TankValue;
-			}
-
-			else {
-				// Refilling for the full o2 tank value
-				oxygenMaxLevel += o2TankValue;
-			}
-			// Refill text pop-up
-			restoredO2.text = "+" +  o2MaxTankValue.ToString();
-
-			restoredO2.gameObject.SetActive(true);
+			RestoreOxygen();
 			Destroy(other.gameObject);
 		}
 
-		if (other.tag == "Death") {
+		if (other.tag == "ShockDeath") {
 			
 			isGameOver = true;
+			animator.SetBool("isShocked", true);
+
+			hurtSound.Play();
+
+			Destroy(this);
+		}
+
+		if (other.tag == "Death") {
+
+			isGameOver = true;
 			animator.SetBool("isChoking", true);
+
+			hurtSound.Play();
+
 			Destroy(this);
 		}
 	}
@@ -232,41 +323,14 @@ public class Player : MonoBehaviour {
 	private void OnTriggerExit2D(Collider2D other) {
 		if (other.tag == "Switch") {
 			Flip(false, true);
+			speed = maxSpeed;
+			jumpForce = maxJumpForce;
 			
-			foreach (GameObject trig in switchTrigger) {
-				if (trig != null) {
-					trig.SetActive(false);
-				}
-			}
+			FlipTriggerStatus(false);
 		}
 	}
 
-	private void OnCollisionEnter2D(Collision2D other) {
-		if (other.gameObject.tag == "FallTrap") {
-
-			fallTrap = other.gameObject;
-			StartCoroutine(FallTrap());
-		}
-	}
-
-	IEnumerator FallTrap() {
-		yield return new WaitForSeconds(2);
-
-		float counter = 50;
-		while (counter != 0) {
-
-			fallTrap.transform.Translate(Vector2.down * 5 * Time.deltaTime);
-			counter --;
-			
-			if (counter == 0) {
-				break;
-			}
-
-			yield return null;
-		}
-	}
-
-	IEnumerator LowerVolume() {
+	IEnumerator LowerLandVolume() {
 		land.Play();
 
 		yield return new WaitForSeconds(.1f);
@@ -286,7 +350,7 @@ public class Player : MonoBehaviour {
 	void ControlLandSound() {
 		if (isGrounded) {
 			if (!land.isPlaying) {
-				StartCoroutine(LowerVolume());
+				StartCoroutine(LowerLandVolume());
 			}
 		}
 		else {

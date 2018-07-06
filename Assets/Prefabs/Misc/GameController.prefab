@@ -70,6 +70,8 @@ MonoBehaviour:
   restartOrQuitText: {fileID: 0}
   levelCompletedText: {fileID: 0}
   loadingBar: {fileID: 0}
+  gameOverJingle: {fileID: 0}
+  mainMusic: {fileID: 0}
   maxLevelUnlocked: 0
   levelCompleted: 0
   isOnLastLevel: 0

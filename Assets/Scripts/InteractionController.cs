@@ -36,41 +36,49 @@ public class InteractionController : MonoBehaviour {
 		}
 	}
 
+	void Grab() {
+		// Grab mechanic
+		if (canInteract) {
+			// Impeding the player possibility to grab multiple objects at once
+			canInteract = false;
+
+			isGrabbing = true;
+			boxPickupSound.Play();
+
+			// Creating a joint on the player and connecting our current interactable object to it
+			joint = gameObject.AddComponent<FixedJoint2D>();
+			joint.connectedBody = interactionObject.gameObject.GetComponent<Rigidbody2D>();
+
+			// Decreasing the player's jump force
+			player.jumpForce = player.jumpForceWhileGrab;
+
+			// Setting our object's collider to trigger to avoid unwanted collisions
+			//interactionObject.GetComponent<BoxCollider2D>().isTrigger = true;
+		}	
+	}
+
+	void Release() {
+		// Release mechanic
+		if (isGrabbing && !keyPressed) {
+			isGrabbing = false;
+			Destroy(joint);
+
+			// Resetting the normal player's jump force
+			player.jumpForce = player.maxJumpForce;
+
+			// Untriggering the object's collider to detect collisions again
+			interactionObject.GetComponent<BoxCollider2D>().isTrigger = false;
+		}
+	}
+
 	void TestGrab() {
 		if (Input.GetButtonDown("Grab")) {
 			// Controlling key state
 			keyPressed =! keyPressed;
 
-			// Grab mechanic
-			if (canInteract) {
-				// Impeding the player possibility to grab multiple objects at once
-				canInteract = false;
+			Grab();
 
-				isGrabbing = true;
-				boxPickupSound.Play();
-
-				// Creating a joint on the player and connecting our current interactable object to it
-				joint = gameObject.AddComponent<FixedJoint2D>();
-				joint.connectedBody = interactionObject.gameObject.GetComponent<Rigidbody2D>();
-
-				// Decreasing the player's jump force
-				player.jumpForce = player.jumpForceWhileGrab;
-
-				// Setting our object's collider to trigger to avoid unwanted collisions
-				interactionObject.GetComponent<BoxCollider2D>().isTrigger = true;
-			}
-
-			// Release mechanic
-			if (isGrabbing && !keyPressed) {
-				isGrabbing = false;
-				Destroy(joint);
-
-				// Resetting the normal player's jump force
-				player.jumpForce = player.maxJumpForce;
-
-				// Untriggering the object's collider to detect collisions again
-				interactionObject.GetComponent<BoxCollider2D>().isTrigger = false;
-			}
+			Release();
 		}
 	}
 
@@ -84,6 +92,10 @@ public class InteractionController : MonoBehaviour {
 			interObjRB = interactionObject.GetComponent<Rigidbody2D>();
 			interObjRB.gravityScale = -interObjRB.gravityScale;
 		}
+
+		if (other.tag == "BoxReleaseTrig") {
+			Destroy(joint);
+		}
 	}	
 
 	private void OnTriggerExit2D(Collider2D other) {
@@ -94,6 +106,7 @@ public class InteractionController : MonoBehaviour {
 
 	private void OnTriggerStay2D(Collider2D other) {
 		if (other.tag == "Door" && hasKey && !gameController.isOnLastLevel) {
+
 			if (Input.GetButtonDown("Interact")) {
 				gameController.ShowLevelCompletedText();
 				doorAnim.SetTrigger("DoorOpenStay");

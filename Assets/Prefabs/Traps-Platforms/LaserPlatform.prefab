@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 61035008052413676}
   m_Layer: 14
   m_Name: PlatformLaser
-  m_TagString: Death
+  m_TagString: ShockDeath
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

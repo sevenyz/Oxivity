@@ -9,11 +9,16 @@ public class GameController : MonoBehaviour {
 	AsyncOperation async;
 	Player player;
 
+	bool hasGameOverPlayed;
+
 	public GameObject loadingScreen;
 	public GameObject gameOverText;
 	public GameObject restartOrQuitText;
 	public GameObject levelCompletedText;
 	public Slider loadingBar;
+
+	public AudioSource gameOverJingle;
+	public AudioSource mainMusic;
 
 	[HideInInspector] public int maxLevelUnlocked;
 	[HideInInspector] public bool levelCompleted;
@@ -47,6 +52,14 @@ public class GameController : MonoBehaviour {
 	// Gameover actions
 	void GameOver() {
 		if (player.isGameOver) {
+
+			mainMusic.Stop();
+
+			if (!hasGameOverPlayed) {
+				gameOverJingle.PlayDelayed(1f);
+				hasGameOverPlayed = true;
+			}
+
 			gameOverText.SetActive(true);
 
 			Invoke("ShowRestartText", 1);

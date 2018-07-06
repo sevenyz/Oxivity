@@ -9,19 +9,20 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1734319700090082}
+  m_RootGameObject: {fileID: 1798378029805560}
   m_IsPrefabParent: 1
---- !u!1 &1734319700090082
+--- !u!1 &1798378029805560
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4331702219480864}
-  - component: {fileID: 212399068293724708}
-  - component: {fileID: 61133992187140074}
-  - component: {fileID: 114365163657135866}
+  - component: {fileID: 4189183444428154}
+  - component: {fileID: 212862834203637034}
+  - component: {fileID: 61235837467375320}
+  - component: {fileID: 114261026267814816}
+  - component: {fileID: 95344650696208014}
   m_Layer: 0
   m_Name: RedButton
   m_TagString: Untagged
@@ -29,64 +30,80 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4331702219480864
+--- !u!4 &4189183444428154
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1734319700090082}
+  m_GameObject: {fileID: 1798378029805560}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.95, y: -3.02, z: 0}
+  m_LocalPosition: {x: -4.17, y: -3.56, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61133992187140074
+--- !u!61 &61235837467375320
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1734319700090082}
+  m_GameObject: {fileID: 1798378029805560}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.12}
+  m_Offset: {x: -0.0014737844, y: -0.7850375}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
+    oldSize: {x: 2.4666667, y: 2.4666667}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.71, y: 0.85}
+  m_Size: {x: 1.4461758, y: 0.8250141}
   m_EdgeRadius: 0
---- !u!114 &114365163657135866
+--- !u!95 &95344650696208014
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1798378029805560}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c20f1653628c242c5844dadbb3536f83, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114261026267814816
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1734319700090082}
+  m_GameObject: {fileID: 1798378029805560}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbf450efb29b644b2bd61d417e4559df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonPressedSound: {fileID: 0}
   platforms: {fileID: 0}
-  greenButton: {fileID: 21300000, guid: 3a179431bd3b7483aaeb5a51c862742b, type: 3}
-  currentSprite: {fileID: 212399068293724708}
---- !u!212 &212399068293724708
+--- !u!212 &212862834203637034
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1734319700090082}
+  m_GameObject: {fileID: 1798378029805560}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -115,7 +132,7 @@ SpriteRenderer:
   m_SortingLayerID: 2108985833
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6dbab4962667847f9bc7dfcc51997ed4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 99363ac2a47d84adc8f8419aa5643842, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

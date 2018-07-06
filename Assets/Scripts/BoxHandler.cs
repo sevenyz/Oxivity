@@ -5,7 +5,7 @@ using UnityEngine;
 public class BoxHandler : MonoBehaviour {
 
 	Rigidbody2D rb2d;
-	InteractionController interactionController;
+	[HideInInspector] public InteractionController interactionController;
 
 	public GameObject circlePlaceholder;
 	public GameObject player;

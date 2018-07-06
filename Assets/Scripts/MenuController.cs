@@ -7,16 +7,10 @@ using UnityEngine.SceneManagement;
 public class MenuController : MonoBehaviour {
 
 	public GameObject menuScreen;
-	public GameObject levelSelectionScreen;
 	public GameObject optionsScreen;
 
 	void Start() {
 		Time.timeScale = 1;
-	}
-
-	public void LevelSelection() {
-		menuScreen.SetActive(false);
-		levelSelectionScreen.SetActive(true);
 	}
 
 	public void Options() {

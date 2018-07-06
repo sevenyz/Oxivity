@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class RoomChangeController : MonoBehaviour {
 
-	public Player player;
 	Rigidbody2D playerRB;
+	
+	public bool isTransitioning;
 
 	public GameObject thisRoom;
 	public GameObject nextRoom;
+
+	public Player player;
 
 	public Transform playerPlaceholderForRepositioning;
 
@@ -20,8 +23,14 @@ public class RoomChangeController : MonoBehaviour {
 	public Animator doorAnim;
 
 	private void Update() {
-		if (canInteractWithDoor && Input.GetButtonDown("Interact")) {
+		if (canInteractWithDoor && Input.GetButtonDown("Interact") && !isTransitioning) {
+
+			isTransitioning = true;
 			fadeAnim.SetTrigger("Transition");
+
+			Invoke("RestorePlayerMovement", 2.5f);
+			
+			//canInteractWithDoor = false;
 
 			if (doorAnim != null) {
 				doorAnim.SetTrigger("DoorOpen");
@@ -31,7 +40,18 @@ public class RoomChangeController : MonoBehaviour {
 		}
 	}
 
+	void RestorePlayerMovement() {
+		player.speed = player.maxSpeed;
+		player.jumpForce = player.maxJumpForce;
+
+		isTransitioning = false;
+	}
+
 	public IEnumerator LoadRoom() {
+
+		player.speed = 0;
+		player.jumpForce = 0;
+
 		yield return new WaitForSeconds(1.2f);
 
 		thisRoom.SetActive(false);

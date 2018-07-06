@@ -10,19 +10,19 @@ public class LevelController : MonoBehaviour {
 
 	public int maxLevelUnlocked;
 
-	public List<Button> unlockedLevels;
+	//public List<Button> unlockedLevels;
 
 	void Start () {
 		//DeleteKey("UnlockedLevels");
 		maxLevelUnlocked = PlayerPrefs.GetInt("UnlockedLevels", maxLevelUnlocked);
-		UnlockLevelButtons();
+		//UnlockLevelButtons();
 
 		if (maxLevelUnlocked > 1) {
 			continueButton.SetActive(true);
 		}
 	}
 
-	void UnlockLevelButtons() {
+	/* void UnlockLevelButtons() {
 		switch (maxLevelUnlocked) {
 			
 			case 2:
@@ -37,11 +37,17 @@ public class LevelController : MonoBehaviour {
 				}
 				break;
 
+			case 4:
+				for (int i = 0; i < maxLevelUnlocked; i++) {
+					unlockedLevels[i].interactable = true;
+				}
+				break;
+
 			default:
 				unlockedLevels[0].interactable = true;
 				break;
 		}
-	}
+	} */
 
 	void DeleteKey(string key) {
 		PlayerPrefs.DeleteKey(key);

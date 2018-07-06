@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class ButtonHandler : MonoBehaviour {
 
-	public GameObject platforms;
+	public AudioSource buttonPressedSound;
 
-	public Sprite greenButton;
-	public SpriteRenderer currentSprite;
-
-	private void Start() {
-		currentSprite = gameObject.GetComponent<SpriteRenderer>();
-	}	
+	public GameObject platforms;	
 
 	void PlatformActivation(GameObject platformsToActivate) {
 		platformsToActivate = platforms;
@@ -23,7 +18,10 @@ public class ButtonHandler : MonoBehaviour {
 
 			if (Input.GetButtonDown("Interact")) {
 				PlatformActivation(platforms);
-				currentSprite.sprite = greenButton;
+
+				this.GetComponent<Animator>().enabled = true;
+
+				buttonPressedSound.Play();
 			}
 		}
 	}

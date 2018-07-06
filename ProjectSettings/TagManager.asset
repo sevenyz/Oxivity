@@ -21,6 +21,8 @@ TagManager:
   - DoorToRoom1
   - DoorToRoom
   - FallTrap
+  - ShockDeath
+  - BoxReleaseTrig
   layers:
   - Default
   - TransparentFX

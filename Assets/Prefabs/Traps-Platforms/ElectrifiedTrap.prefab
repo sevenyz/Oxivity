@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 70904988073447832}
   m_Layer: 14
   m_Name: ElectrifiedTrap
-  m_TagString: Death
+  m_TagString: ShockDeath
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
