@@ -7,7 +7,8 @@ public class BlockChecker : MonoBehaviour {
 	Player player;
 
 	void Start () {
-		player = GetComponentInParent<Player>();
+		player = GameObject.FindGameObjectWithTag("Player").GetComponentInParent<Player>();
+		//player = GetComponentInParent<Player>();
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {

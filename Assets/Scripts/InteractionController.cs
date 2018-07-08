@@ -54,16 +54,16 @@ public class InteractionController : MonoBehaviour {
 	}
 
 	void Release() {
-		if (isGrabbing && !keyPressed) {
-			isGrabbing = false;
-			Destroy(joint);
+		isGrabbing = false;
+		Destroy(joint);
 
-			// Resetting the normal player's jump force
-			player.jumpForce = player.maxJumpForce;
+		// Resetting the normal player's jump force
+		player.jumpForce = player.maxJumpForce;
+		player.speed = player.maxSpeed;
 
-			// Untriggering the object's collider to detect collisions again
-			interactionObject.GetComponent<BoxCollider2D>().isTrigger = false;
-		}
+		// Untriggering the object's collider to detect collisions again
+		interactionObject.GetComponent<BoxCollider2D>().isTrigger = false;
+		
 	}
 
 	void TestGrab() {
@@ -73,7 +73,9 @@ public class InteractionController : MonoBehaviour {
 
 			Grab();
 
-			Release();
+			if (isGrabbing && !keyPressed) {
+				Release();
+			}
 		}
 	}
 
@@ -89,7 +91,7 @@ public class InteractionController : MonoBehaviour {
 		}
 
 		if (other.tag == "BoxReleaseTrig") {
-			Destroy(joint);
+			Release();
 		}
 	}	
 

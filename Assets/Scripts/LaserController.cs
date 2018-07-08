@@ -13,17 +13,17 @@ public class LaserController : MonoBehaviour {
 
 	IEnumerator LaserSound() {
 
-		yield return new WaitForSeconds(1.8f);
+		yield return new WaitForSeconds(1.2f);
 
 		while (true) {
 
 			laserSound.Play();
 
-			yield return new WaitForSeconds(6.4f);
+			yield return new WaitForSeconds(7.4f);
 
 			laserSoundReverse.Play();
 
-			yield return new WaitForSeconds(3.6f);
+			yield return new WaitForSeconds(3.8f);
 		}
 	}
 }

@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
 
 	Animator animator;
 	Rigidbody2D rb2d;
+	InteractionController interactionController;
 	
 	public bool isGrounded;
 	float oxygenLevel;
@@ -47,6 +48,7 @@ public class Player : MonoBehaviour {
 		// Applying references
 		rb2d = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
+		interactionController = GetComponent<InteractionController>();
 	}
 
 	void Start() {
@@ -93,10 +95,6 @@ public class Player : MonoBehaviour {
 			animator.SetBool("isChoking", true);
 			Destroy(this);
 		}
-	}
-
-	void ShockAnimationControl() {
-		
 	}
 
 	void MovementAnimationControl() {
@@ -280,6 +278,17 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	private void OnCollisionEnter2D(Collision2D other) {
+		if (other.gameObject.tag == "ShockDeath") {
+			isGameOver = true;
+			animator.SetBool("isShocked", true);
+
+			hurtSound.Play();
+
+			Destroy(this);
+		}
+	}
+
 	private void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "GravitySwitch") {
 			GravitySwitch();
@@ -315,7 +324,13 @@ public class Player : MonoBehaviour {
 		if (other.tag == "Switch") {
 			Flip(false, true);
 			speed = maxSpeed;
-			jumpForce = maxJumpForce;
+
+			if (!interactionController.isGrabbing) {
+				jumpForce = maxJumpForce;
+			}
+			else {
+				jumpForce = jumpForceWhileGrab;
+			}
 			
 			FlipTriggerStatus(false);
 		}

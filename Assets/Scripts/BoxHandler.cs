@@ -9,6 +9,7 @@ public class BoxHandler : MonoBehaviour {
 
 	public GameObject circlePlaceholder;
 	public GameObject player;
+	public Transform placeholder;
 
 	public AudioSource land;
 
@@ -64,6 +65,10 @@ public class BoxHandler : MonoBehaviour {
 	private void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "Switch") {
 			Flip();
+		}
+
+		if (other.tag == "BoxReleaseTrig") {
+			this.transform.position = placeholder.position;
 		}
 	}
 
