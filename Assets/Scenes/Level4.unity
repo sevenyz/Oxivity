@@ -322,12 +322,12 @@ Prefab:
     - target: {fileID: 224516075497150146, guid: 9239c40231f8d4606a0f3268b4323802,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224516075497150146, guid: 9239c40231f8d4606a0f3268b4323802,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9239c40231f8d4606a0f3268b4323802, type: 2}
@@ -745,7 +745,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1581317360907394, guid: 50b0ed4641b934f08bfc885be44c45c5, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4453400957927394, guid: 50b0ed4641b934f08bfc885be44c45c5, type: 2}
       propertyPath: m_LocalScale.x
@@ -996,6 +996,11 @@ AudioSource:
   m_PrefabParentObject: {fileID: 82834318230425344, guid: 9512676dad4cf4cdf937a7873c7c0ddc,
     type: 2}
   m_PrefabInternal: {fileID: 828504428}
+--- !u!1 &688459061 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1581317360907394, guid: 50b0ed4641b934f08bfc885be44c45c5,
+    type: 2}
+  m_PrefabInternal: {fileID: 382184935}
 --- !u!1 &690342149
 GameObject:
   m_ObjectHideFlags: 0
@@ -2067,7 +2072,7 @@ Prefab:
         type: 2}
       propertyPath: switchTrigger.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 688459061}
     - target: {fileID: 114276513867414146, guid: f6fd6244e4a9f4b1f84442a0b76474fd,
         type: 2}
       propertyPath: switchTrigger.Array.data[1]
