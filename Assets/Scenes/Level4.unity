@@ -4148,6 +4148,11 @@ Prefab:
       propertyPath: land
       value: 
       objectReference: {fileID: 257359604}
+    - target: {fileID: 212703677568176698, guid: 4340606581d0f4fef96c1c624ab3680d,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4340606581d0f4fef96c1c624ab3680d, type: 2}
   m_IsPrefabParent: 0
