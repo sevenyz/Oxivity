@@ -1189,7 +1189,7 @@ Prefab:
         type: 2}
       propertyPath: gameOverText
       value: 
-      objectReference: {fileID: 1455994734}
+      objectReference: {fileID: 1882063070}
     - target: {fileID: 114769962847475390, guid: d782fa6adb8cf490a804b63882b96b6d,
         type: 2}
       propertyPath: restartOrQuitText
@@ -6088,11 +6088,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1455994734 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1859428711490312, guid: 9239c40231f8d4606a0f3268b4323802,
-    type: 2}
-  m_PrefabInternal: {fileID: 131344121}
 --- !u!1 &1456277179
 GameObject:
   m_ObjectHideFlags: 0
@@ -7600,6 +7595,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4990267309858736, guid: f70aff78db726419ab70c96d055ce9fc,
     type: 2}
   m_PrefabInternal: {fileID: 1874698196}
+--- !u!1 &1882063070 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1664916526134568, guid: 9239c40231f8d4606a0f3268b4323802,
+    type: 2}
+  m_PrefabInternal: {fileID: 131344121}
 --- !u!1 &1890374863
 GameObject:
   m_ObjectHideFlags: 0
