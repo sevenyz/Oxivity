@@ -65,6 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e0c0de4114946f59da4537c3129dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelFade: {fileID: 0}
   loadingScreen: {fileID: 0}
   gameOverText: {fileID: 0}
   restartOrQuitText: {fileID: 0}

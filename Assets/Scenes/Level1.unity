@@ -321,27 +321,7 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 223314228193457000, guid: 9239c40231f8d4606a0f3268b4323802,
-        type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1190662454}
-    - target: {fileID: 114462324764395336, guid: 9239c40231f8d4606a0f3268b4323802,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 289976121}
-    - target: {fileID: 114057449011003506, guid: 9239c40231f8d4606a0f3268b4323802,
-        type: 2}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1109077188}
-    - target: {fileID: 114413892788352422, guid: 9239c40231f8d4606a0f3268b4323802,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 289976121}
-    - target: {fileID: 114494194861047468, guid: 9239c40231f8d4606a0f3268b4323802,
+    - target: {fileID: 114168349037615940, guid: 9239c40231f8d4606a0f3268b4323802,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -351,11 +331,31 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 289976120}
-    - target: {fileID: 114168349037615940, guid: 9239c40231f8d4606a0f3268b4323802,
+    - target: {fileID: 114494194861047468, guid: 9239c40231f8d4606a0f3268b4323802,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 289976121}
+    - target: {fileID: 114413892788352422, guid: 9239c40231f8d4606a0f3268b4323802,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 289976121}
+    - target: {fileID: 114057449011003506, guid: 9239c40231f8d4606a0f3268b4323802,
+        type: 2}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1109077188}
+    - target: {fileID: 114462324764395336, guid: 9239c40231f8d4606a0f3268b4323802,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 289976121}
+    - target: {fileID: 223314228193457000, guid: 9239c40231f8d4606a0f3268b4323802,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1190662454}
     - target: {fileID: 224516075497150146, guid: 9239c40231f8d4606a0f3268b4323802,
         type: 2}
       propertyPath: m_AnchorMax.x
@@ -433,6 +433,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114769962847475390, guid: d782fa6adb8cf490a804b63882b96b6d,
+        type: 2}
+      propertyPath: levelFade
+      value: 
+      objectReference: {fileID: 1704518934}
     - target: {fileID: 114769962847475390, guid: d782fa6adb8cf490a804b63882b96b6d,
         type: 2}
       propertyPath: loadingScreen
@@ -1253,6 +1258,41 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 224497097481071294, guid: 230564f5933d745418d41346db74925d,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224733522238138354, guid: 230564f5933d745418d41346db74925d,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092661148943462, guid: 230564f5933d745418d41346db74925d, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114124164190303420, guid: 230564f5933d745418d41346db74925d,
+        type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 114124164190303420, guid: 230564f5933d745418d41346db74925d,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: a60afe7c2c8934792892015ed50103d5,
+        type: 3}
+    - target: {fileID: 224862779256004042, guid: 230564f5933d745418d41346db74925d,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224862779256004042, guid: 230564f5933d745418d41346db74925d,
+        type: 2}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 230564f5933d745418d41346db74925d, type: 2}
   m_IsPrefabParent: 0
@@ -1325,6 +1365,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4453400957927394, guid: 50b0ed4641b934f08bfc885be44c45c5,
     type: 2}
   m_PrefabInternal: {fileID: 1567191325}
+--- !u!1 &1704518934 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1765708551269076, guid: 9239c40231f8d4606a0f3268b4323802,
+    type: 2}
+  m_PrefabInternal: {fileID: 131344121}
 --- !u!82 &1726698374 stripped
 AudioSource:
   m_PrefabParentObject: {fileID: 82992043902096016, guid: 9512676dad4cf4cdf937a7873c7c0ddc,
@@ -1493,6 +1538,11 @@ Prefab:
       propertyPath: warningFast
       value: 
       objectReference: {fileID: 88717238}
+    - target: {fileID: 114815807041953744, guid: f6fd6244e4a9f4b1f84442a0b76474fd,
+        type: 2}
+      propertyPath: levelFade
+      value: 
+      objectReference: {fileID: 1704518934}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f6fd6244e4a9f4b1f84442a0b76474fd, type: 2}
   m_IsPrefabParent: 0

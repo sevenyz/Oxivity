@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
 
 	bool hasGameOverPlayed;
 
+	public GameObject levelFade;
 	public GameObject loadingScreen;
 	public GameObject gameOverText;
 	public GameObject restartOrQuitText;
@@ -37,16 +38,25 @@ public class GameController : MonoBehaviour {
 		GameOver();
 
 		// Checking if is last level
-		if (SceneManager.GetActiveScene().buildIndex >= 4) {
+		/* if (SceneManager.GetActiveScene().buildIndex >= 4) {
 			isOnLastLevel = true;
-		} 
+		}  */
 
 		// Loading next level
 		if (levelCompleted) {
 			if (Input.GetKeyDown(KeyCode.Return)) {
-				StartCoroutine(Loading());
+				//StartCoroutine(Loading());
+				StartCoroutine(LevelFade());
 			}
 		}
+	}
+
+	IEnumerator LevelFade() {
+		levelFade.SetActive(true);
+
+		yield return new WaitForSeconds(2);
+
+		StartCoroutine(Loading());
 	}
 
 	// Gameover actions
@@ -97,20 +107,14 @@ public class GameController : MonoBehaviour {
 		SceneManager.LoadScene("MainMenu");
 	}
 
-	// Beta
 	public IEnumerator Loading() {
 		loadingScreen.SetActive(true);
 
 		async = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
-		async.allowSceneActivation = false;
 
-		if (async.isDone == false) {
+		while (!async.isDone) {
 			loadingBar.value = async.progress;
 
-			if (async.progress <= 0.9f) {
-				loadingBar.value = 1;
-				async.allowSceneActivation = true;
-			}
 			yield return null;
 		}
 	}

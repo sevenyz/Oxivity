@@ -22,6 +22,7 @@ public class InteractionController : MonoBehaviour {
 	public bool canInteract;
 	public bool hasKey;
 	public bool isGrabbing;
+	public bool levelCompleted;
 
 	void Start() {
 		joint = GetComponent<FixedJoint2D>();	
@@ -102,11 +103,13 @@ public class InteractionController : MonoBehaviour {
 	}
 
 	private void OnTriggerStay2D(Collider2D other) {
-		if (other.tag == "Door" && hasKey && !gameController.isOnLastLevel) {
+		if (other.tag == "Door" && hasKey) {
 
 			if (Input.GetButtonDown("Interact")) {
 				gameController.ShowLevelCompletedText();
 				doorAnim.SetTrigger("DoorOpenStay");
+
+				levelCompleted = true;
 			}
 		}
 

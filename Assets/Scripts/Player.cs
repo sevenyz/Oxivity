@@ -15,6 +15,7 @@ public class Player : MonoBehaviour {
 	public bool isGrounded;
 	float oxygenLevel;
 	float o2MaxTankValue;
+	bool canFlip = true;
 	
 	public Animator o2Anim;
 	public GameController gameController;
@@ -74,6 +75,12 @@ public class Player : MonoBehaviour {
 
 			JumpControl();
 		}
+
+		if (interactionController.levelCompleted) {
+			speed = 0;
+			jumpForce = 0;
+			canFlip = false;
+		}
 	}
 
 	void FixedUpdate () {
@@ -98,7 +105,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void MovementAnimationControl() {
-		if (Input.GetAxisRaw("Horizontal") != 0) {
+		if (Input.GetAxisRaw("Horizontal") != 0 && speed != 0) {
 			animator.SetBool("isMoving", true);
 			ControlStepSound();
 		}
@@ -118,12 +125,12 @@ public class Player : MonoBehaviour {
 		rb2d.velocity = movement;
 
 		// Checking if moving right and facing left
-		if (horizontalInput > 0 && !isFacingRight) {
+		if (horizontalInput > 0 && !isFacingRight && canFlip) {
 			// Flip the sprite on the x axis
 			Flip (true, false);
 		}
 		// Checking if moving left and facing right
-		else if (horizontalInput < 0 && isFacingRight) {
+		else if (horizontalInput < 0 && isFacingRight && canFlip) {
 			// Flip the sprite on the x axis
 			Flip (true, false);	
 		} 
