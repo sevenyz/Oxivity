@@ -381,22 +381,7 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114168349037615940, guid: 9239c40231f8d4606a0f3268b4323802,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 289976121}
-    - target: {fileID: 114991051321948650, guid: 9239c40231f8d4606a0f3268b4323802,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 289976120}
-    - target: {fileID: 114494194861047468, guid: 9239c40231f8d4606a0f3268b4323802,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 289976121}
-    - target: {fileID: 114413892788352422, guid: 9239c40231f8d4606a0f3268b4323802,
+    - target: {fileID: 114462324764395336, guid: 9239c40231f8d4606a0f3268b4323802,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -406,7 +391,22 @@ Prefab:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1109077188}
-    - target: {fileID: 114462324764395336, guid: 9239c40231f8d4606a0f3268b4323802,
+    - target: {fileID: 114413892788352422, guid: 9239c40231f8d4606a0f3268b4323802,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 289976121}
+    - target: {fileID: 114494194861047468, guid: 9239c40231f8d4606a0f3268b4323802,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 289976121}
+    - target: {fileID: 114991051321948650, guid: 9239c40231f8d4606a0f3268b4323802,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 289976120}
+    - target: {fileID: 114168349037615940, guid: 9239c40231f8d4606a0f3268b4323802,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

@@ -13,7 +13,7 @@ public class Player : MonoBehaviour {
 	InteractionController interactionController;
 	
 	public bool isGrounded;
-	float oxygenLevel;
+	public float oxygenLevel;
 	float o2MaxTankValue;
 	bool canFlip = true;
 	
@@ -194,8 +194,9 @@ public class Player : MonoBehaviour {
 
 	IEnumerator DecreaseOxygen() {
 		while (oxygenLevel >= 0 && !gameController.levelCompleted) {
-			// Decreasing our current o2 level by 1 every second and updating it's visual state
+			// Decreasing our current o2 level by 1 every second and updating its visual state
 			oxygenLevel = oxygenMaxLevel - Time.timeSinceLevelLoad;
+			//oxygenLevel -= Time.timeSinceLevelLoad;
 			oxygenSlider.value = oxygenLevel;
 
 			yield return null;
@@ -214,20 +215,28 @@ public class Player : MonoBehaviour {
 			warningSlow.Stop();
 		}
 
-		if (percentageRemaining <= 40f) {
+		if (percentageRemaining <= 40f && percentageRemaining > 20) {
 			o2Anim.SetBool("NoWarning", false);
 			o2Anim.SetBool("YellowWarning", true);
+			o2Anim.SetBool("RedWarning", false);
 
 			if (!warningSlow.isPlaying) {
 				warningSlow.Play();
 			}
+			
+			if(warningFast.isPlaying) {
+				warningFast.Stop();
+			}
 		}
 
-		if (percentageRemaining <= 20f) {
+		if (percentageRemaining <= 20f && percentageRemaining > 0) {
 			o2Anim.SetBool("YellowWarning", false);
 			o2Anim.SetBool("RedWarning", true);
+			o2Anim.SetBool("NoWarning", false);
 			
-			warningSlow.Stop();
+			if (warningSlow.isPlaying) {
+				warningSlow.Stop();
+			}
 
 			if (!warningFast.isPlaying) {
 				warningFast.Play();
@@ -236,6 +245,8 @@ public class Player : MonoBehaviour {
 
 		if (percentageRemaining <= 0) {
 			o2Anim.SetBool("NoWarning", true);
+			o2Anim.SetBool("YellowWarning", false);
+			o2Anim.SetBool("RedWarning", false);
 			
 			warningFast.Stop();
 		}
@@ -256,15 +267,22 @@ public class Player : MonoBehaviour {
 
 		// Checking if the sum of our current o2 and the o2 tank is greater than our max o2 capacity
 		if (o2TankValue + oxygenLevel > oxygenMaxLevel) {
+
 			// Refilling only for our available o2 capacity
-			o2TankValue =  Mathf.Abs(oxygenLevel - oxygenMaxLevel);
+			o2TankValue = oxygenMaxLevel - oxygenLevel;
+
 			oxygenMaxLevel += o2TankValue;
+			//oxygenMaxLevel = oxygenLevel + o2TankValue;
+			//oxygenLevel = oxygenMaxLevel + o2TankValue;
 		}
 
 		else {
 			// Refilling for the full o2 tank value
 			oxygenMaxLevel += o2TankValue;
 		}
+		
+		o2TankValue = o2MaxTankValue;
+		
 		// Refill text pop-up
 		restoredO2.text = "+" +  o2MaxTankValue.ToString();
 
