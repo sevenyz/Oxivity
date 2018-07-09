@@ -3744,6 +3744,7 @@ Transform:
   - {fileID: 171399736}
   - {fileID: 2122070786}
   - {fileID: 1166458725}
+  - {fileID: 2147091029}
   m_Father: {fileID: 1282086707}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5757,3 +5758,58 @@ Transform:
   m_PrefabParentObject: {fileID: 4054167164904380, guid: 7d6d19320385c4661946219f32b78815,
     type: 2}
   m_PrefabInternal: {fileID: 1841021695}
+--- !u!1001 &2147091028
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1364062538}
+    m_Modifications:
+    - target: {fileID: 4054167164904380, guid: 7d6d19320385c4661946219f32b78815, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 1.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054167164904380, guid: 7d6d19320385c4661946219f32b78815, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054167164904380, guid: 7d6d19320385c4661946219f32b78815, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054167164904380, guid: 7d6d19320385c4661946219f32b78815, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054167164904380, guid: 7d6d19320385c4661946219f32b78815, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054167164904380, guid: 7d6d19320385c4661946219f32b78815, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054167164904380, guid: 7d6d19320385c4661946219f32b78815, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054167164904380, guid: 7d6d19320385c4661946219f32b78815, type: 2}
+      propertyPath: m_RootOrder
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054167164904380, guid: 7d6d19320385c4661946219f32b78815, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350134833355854, guid: 7d6d19320385c4661946219f32b78815, type: 2}
+      propertyPath: m_Name
+      value: ElectrifiedTrap (15)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 7d6d19320385c4661946219f32b78815, type: 2}
+  m_IsPrefabParent: 0
+--- !u!4 &2147091029 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4054167164904380, guid: 7d6d19320385c4661946219f32b78815,
+    type: 2}
+  m_PrefabInternal: {fileID: 2147091028}
